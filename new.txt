@@ -1,0 +1,1016 @@
+00:00
+what's going on everybody and welcome to
+00:03
+a creating a reddit bot tutorial in
+00:06
+Python so what we're gonna be doing
+00:08
+specifically is creating a reddit bot
+00:10
+that goes through and detects reddit
+00:14
+spam and affiliate links specifically in
+00:17
+this case to udemy but we could very
+00:19
+easily modify this to detect quite a bit
+00:21
+of spam so over like the last year I've
+00:25
+noticed this is crazy sharp incline in
+00:28
+the amount of just udemy affiliate link
+00:31
+spam coming in to Reddit and it's hard I
+00:35
+think to catch because they're not
+00:38
+necessarily directly linking to to udemy
+00:40
+they're kind of linking to some other
+00:42
+tracker site that then links to udemy so
+00:44
+a lot of times they link to a Twitter
+00:46
+post that links to udemy or links to a
+00:48
+tracker site that links to udemy or they
+00:49
+link to a medium post and so on now that
+00:54
+seems to be on the decline and now
+00:55
+they're actually not even doing that
+00:57
+extra step they're they're actually just
+00:58
+linking direct to to the tracker site
+01:02
+then which goes to udemy and they're not
+01:04
+even being kind of hidden about it most
+01:06
+of the time they're saying udemy and all
+01:07
+this kind of stuff so anyways I thought
+01:10
+about writing a bot a long time ago to
+01:12
+do this and detect this kind of spam but
+01:14
+there are just so many other things I
+01:16
+wanted to spend my time on I didn't
+01:17
+really feel like doing it that was until
+01:20
+a few days ago I found some reddit spam
+01:24
+to you to udemy course that was actually
+01:27
+a pirated course of my courses a direct
+01:30
+rip from YouTube even the author's bio
+01:33
+on udemy was a rip from H Kingsley com
+01:36
+so just a total pirated course and this
+01:41
+was being spammed on reddit so why don't
+01:44
+you know I found some time I found some
+01:46
+motivation and I wrote the bot so here
+01:48
+it is I'm gonna run through it with you
+01:49
+guys we're not gonna be writing it line
+01:50
+by line I'm gonna kind of copy the the
+01:53
+method I did with the latest one of the
+01:55
+latest tutorials if you want to learn
+01:57
+more about working with Priscilla go to
+02:00
+the project Oriole series like this is
+02:02
+just going to be part four of that
+02:03
+series so if you want to learn more
+02:05
+about interacting with the the reddit
+02:07
+objects and stuff like that check that
+02:08
+out this is really just a application I
+02:11
+mean just kind of showing you it going
+02:13
+to
+02:14
+so the first thing that we're gonna want
+02:16
+to do obviously have a reddit account
+02:17
+suck the API again go through the
+02:19
+process if you don't know how to do that
+02:21
+but basically make an account go to your
+02:23
+account preferences app create the app
+02:25
+make sure it's a script app that's about
+02:28
+it really
+02:30
+fill out the form so once you've done
+02:32
+that you'll have your credentials client
+02:34
+ID secret password user agent username
+02:36
+I'm putting these into a prom on your
+02:38
+score creds dot PI this is a copy of
+02:40
+that because the real one actually has
+02:42
+my real values and I don't wanna show it
+02:43
+to you so anyway and then I've got a to
+02:46
+catch a press to catch a scammer dot PI
+02:50
+script so with that let's go ahead and
+02:53
+get started
+02:54
+the first things we're going to need to
+02:55
+do is import that proc creds the client
+02:58
+ID oh by the way you don't have to write
+03:00
+all this out I have a link in the
+03:01
+description to this tutorial also the
+03:03
+code is on github so if you want to
+03:06
+contribute or check out the code or
+03:07
+whatever it's it's up there I'll put a
+03:09
+link in the description but it's just
+03:10
+Ram spam reddit spam detector bot okay
+03:14
+so once we've got that the next thing
+03:18
+that I want to do is basically we create
+03:21
+the reddit object itself pass through
+03:23
+all the credential stuff and all that
+03:25
+and then we kind of have to figure out
+03:27
+okay how are we gonna catch these people
+03:28
+how are we gonna figure out who's a
+03:29
+spammer who's not because just because
+03:31
+someone's posting a link that does go to
+03:33
+udemy it doesn't necessarily mean that
+03:36
+they're a spammer I mean they're
+03:38
+probably a spammer but we can't just
+03:39
+assume at that point that they're a
+03:41
+spammer so what we actually need to do
+03:43
+is probably go through all of the posts
+03:46
+but then like go through posts that are
+03:49
+linking to udemy stuff but then also go
+03:52
+to that username and then check out that
+03:54
+username or all of their posts to udemy
+03:56
+junk or is just some of it or you know
+03:59
+whatever cuz sometimes like I thought it
+04:01
+was probably the course creators just
+04:03
+the course creator that created the
+04:04
+course and then they went to you read it
+04:06
+to kind of spam it out but no these are
+04:08
+definitely massive spam rings so I found
+04:13
+so much like they're huge
+04:15
+I didn't realize how big this problem
+04:17
+was until I I really started looking
+04:19
+into it's pretty it's pretty nuts anyway
+04:21
+so what I've done here is I'll pull up
+04:23
+so for example let me pull up my little
+04:26
+boy
+04:26
+guy so this is my spam detector bot and
+04:33
+basically what he does is he just you
+04:35
+know he's just going to these threads
+04:37
+and just post this message basically so
+04:39
+I get in this case this guy I don't even
+04:43
+know this name it's just a spam name
+04:45
+we're just saying hey you know six a
+04:47
+third of these 33 submissions from this
+04:50
+user appear to be udemy affiliate links
+04:52
+and the reason we can know that is if we
+04:54
+actually go to this user account we just
+04:56
+click on it and we can see like look at
+04:58
+all of these courses really a hundred
+05:00
+percent of these are courses in my case
+05:02
+we're just looking for the term udemy
+05:04
+but in time I plan to expand that out
+05:08
+because obviously especially once
+05:10
+somebody figures out that I'm looking
+05:12
+for the term udemy they'll just remove
+05:13
+the term udemy so so that'll that'll
+05:16
+change for sure we'll come up with
+05:18
+better words and stuff and ways to match
+05:20
+courses there's lots of little things
+05:22
+I'm not sure I'm going to go over all of
+05:24
+them I don't want to give away the
+05:26
+tricks to the trade but anyways yeah so
+05:30
+it's pretty quick and easy to go to
+05:32
+these people's page and figure out this
+05:35
+is a spam bot or a spammer I'm actually
+05:37
+not confident these are BOTS I think it
+05:40
+might actually be a human behind them
+05:42
+anyways we're gonna move these aside now
+05:44
+so that's what we need to do we need to
+05:46
+get to this user and look through his
+05:48
+content so so we can do all of that with
+05:51
+the Python reddit API wrapper so what
+05:53
+we're going to do first is find a just
+05:56
+bind spam by a username so the function
+05:59
+that I wrote for that or find spam and
+06:01
+then return the user names so basically
+06:04
+what we're gonna do here is we're just
+06:06
+going to go through a search query and
+06:09
+just log all of the authors right
+06:13
+and then what we're gonna do here is
+06:15
+let's just iterate through that real
+06:16
+quick just to show you an example of it
+06:18
+running so paste and then I'll run that
+06:23
+so here we have just the list basically
+06:26
+just ran through you know the posts and
+06:29
+then here are the users so all these
+06:34
+people are suspicious at least but again
+06:39
+these are just people who have posted
+06:40
+about udemy we don't know anything more
+06:42
+about them so we really kind of want to
+06:45
+dig a little deeper into these users to
+06:47
+really determine whether or not they're
+06:49
+there spammer or they're just a regular
+06:51
+person sharing a link to their course so
+06:55
+now I'm going to go ahead and do is just
+06:57
+overwrite this kind of loop here and so
+07:00
+instead what we're going to do is we're
+07:01
+gonna search for query and right now
+07:03
+we're just gonna random choice for udemy
+07:05
+again later I would add many many more
+07:07
+terms to that because again if we're
+07:09
+just looking for udemy if these spammers
+07:11
+were to find out that that's the one
+07:13
+thing that is the crux to this entire
+07:16
+code they'll just stop posting udemy
+07:18
+they'll they'll just stop using that
+07:20
+word because it's really not essential
+07:22
+so anyways once we find that we're gonna
+07:26
+have spam content trashy users and then
+07:28
+basically smelly authors we don't know
+07:30
+if these authors are trashy but they
+07:31
+smell bad so we're gonna figure out a
+07:34
+little bit more about them so also we're
+07:37
+using random here so let's go ahead and
+07:38
+at this stage we need to import random
+07:43
+okay so once we have these smelly
+07:45
+authors we want to start iterating
+07:47
+through the smelly authors to figure out
+07:49
+what their deal is so come down here pay
+07:52
+so make sure we're not having a tab
+07:53
+issue good and let me make sure this is
+07:56
+set right and then okay cool so what
+08:02
+we're going to do is now we start
+08:03
+iterating over those authors so for each
+08:05
+author in smelly authors we're gonna say
+08:07
+we're gonna start counting how many
+08:09
+trashy URLs do they have how many
+08:11
+submissions did they make and how many
+08:13
+of those submissions are dirty so then
+08:16
+what we want to have is something that
+08:18
+is like common spammy words so I'm gonna
+08:21
+actually come up to the top here and
+08:23
+just paste that in so common spam you
+08:26
+weren't worms udemy course save coupon
+08:30
+free discount as a matter of fact really
+08:32
+a lot of these things like for sure
+08:34
+course coupon discount chances are if
+08:38
+someone has these things in there it's
+08:40
+probably spam
+08:42
+anyway and then if the user continues
+08:46
+like again if we just if we search for
+08:47
+spammy words and then we only matched
+08:49
+these spammy words if like more than 50
+08:53
+percent of a user
+08:54
+content is always this junk there a
+08:57
+spammer so so anyway that's just again
+09:00
+to point out you know the the udemy
+09:02
+should not be the only word that you're
+09:04
+going to use I'm just gonna do it for
+09:06
+this tutorial I don't want to give away
+09:07
+all the great words but we'll see I'm
+09:10
+gonna have it up on github for a little
+09:12
+bit and if people contribute then we
+09:14
+could probably leave it open source and
+09:15
+it won't be a big deal if people can
+09:17
+stay ahead of it but this isn't exactly
+09:20
+the most exciting task in the world so
+09:22
+I'm not really sure how many people are
+09:23
+gonna help but it's it's kind of fun to
+09:26
+combat these guys so anyway the next
+09:29
+thing that we're gonna do is basically
+09:32
+we want to run through their submissions
+09:34
+so we found the author now I want to
+09:36
+iterate over that authors submission so
+09:39
+we want to visit their profile so I'm
+09:41
+gonna paste in that chunk of code let me
+09:42
+zoom out a little bit there so it all
+09:44
+fits so we want to throw a try and
+09:46
+accept into here mostly because the post
+09:49
+might have been made by that author but
+09:51
+these authors are spam authors they're
+09:53
+they're going to eventually be removed
+09:56
+from reddit so when that happens
+09:58
+sometimes these users will return error
+10:00
+codes if you try to access them
+10:02
+otherwise what we're going to do is
+10:04
+basically we're going to say is for
+10:05
+submission in that redditors and then
+10:08
+string author because at this point
+10:09
+author is actually an object it's an
+10:12
+author object from the reddit instance
+10:14
+so from whatever that authors user name
+10:17
+is their submissions ordered by new
+10:19
+we're gonna start iterating over them so
+10:21
+we're gonna see where that submission
+10:22
+links to at the moment I don't actually
+10:24
+think I'm using this but this is another
+10:26
+great thing to track to figure out if
+10:28
+someone's a spammer right now they're
+10:30
+using the same kind of websites so one
+10:33
+you could figure out they're a spammer
+10:34
+but two you could also link them to
+10:36
+other spammers and this is what I
+10:38
+started to do to identify the networks
+10:40
+themselves so the people that are
+10:43
+spamming to the same kind of trackers
+10:44
+they're pretty much all connected and
+10:47
+given the fact that they all have very
+10:49
+similar usernames I'm gonna go ahead and
+10:51
+say it's probably the same group that's
+10:53
+doing this but anyways moving right
+10:56
+along I'm not actually using that right
+10:57
+now I don't think but it's still
+10:59
+something good to track otherwise we
+11:02
+take the ID so we can quickly get to it
+11:05
+actually I'm not even sure we're
+11:06
+tracking that anymore
+11:07
+because I think we just get the URL to
+11:09
+it but anyways we also want to track the
+11:11
+subreddit again just in case there's
+11:13
+like a udemy freebies subreddit that is
+11:15
+basically all affiliate spam so I think
+11:19
+everybody in that subreddit probably
+11:21
+knows exactly what that subreddit is
+11:23
+it's like literally probably for
+11:25
+spammers so not really sure what to say
+11:28
+about that honestly I feel like that sub
+11:30
+should just be deleted whatever but then
+11:34
+we're gonna say dirty equals false and
+11:36
+then what we're gonna do is we're gonna
+11:36
+iterate through the spammy words and
+11:38
+then for each word in the submit title
+11:41
+dot lower what we want to do is if I'm
+11:47
+sorry if the word is in the submit title
+11:50
+lower that way we lowercase everything
+11:52
+if it is then we're going to say dirty
+11:54
+is equal to true we probably should
+11:57
+break at this point and not way soon
+12:01
+it's not gonna I would break at this
+12:03
+point but we're gonna continue on
+12:05
+anyways and then if that junk is not
+12:08
+already in the users trashy URLs let's
+12:11
+go ahead and add some information the
+12:12
+submission ID the title and the author's
+12:15
+name into there and then if this is
+12:18
+dirty what we're gonna do is we're gonna
+12:19
+add two dirty count add to the sub count
+12:21
+and we're just it's just basically a
+12:22
+counter a counter for that now what we
+12:26
+want to do is if if the trashy score is
+12:30
+above something basically so we want to
+12:32
+generate this kind of track oh we don't
+12:34
+have a trashy score so let me copy and
+12:36
+paste this new block because actually
+12:38
+this one's going to change so really
+12:42
+we're just adding a little bit under
+12:43
+here but basically what we're gonna say
+12:45
+is so like what we did up to this point
+12:47
+is like right here right that's what
+12:49
+we've just covered here what we're gonna
+12:51
+say is we're gonna try to say the trashy
+12:56
+score is equal to however many dirty
+12:58
+posts as person made over the total that
+13:00
+they have if we fail for whatever reason
+13:02
+for example sometimes the sub count will
+13:04
+be zero again some sort of weird error
+13:06
+you'll get a Divya so we're just gonna
+13:08
+say trashy score is zero otherwise it's
+13:11
+just the percentage of trashy posts so
+13:14
+we'll just print this out you could
+13:16
+leave this or or get rid of it honestly
+13:18
+this won't take too much of your time so
+13:20
+you could just leave it
+13:21
+anyway if the trashy score right now is
+13:24
+above 50% we're gonna add this user to
+13:27
+the trash users and then for each trash
+13:31
+in trashy or user trashy URLs we're
+13:35
+gonna add that to the spam content in
+13:38
+general so once we get to this point
+13:44
+what we could do let's go ahead and run
+13:46
+this and make sure this actually works
+13:48
+so at this point we were just returning
+13:49
+you users let's go ahead and run this
+13:52
+real quick and make sure we don't have
+13:54
+errors
+13:55
+okay so we're already running through it
+13:57
+we've found online free courses their
+13:59
+trash D score is basically 92% we've
+14:02
+already run through tools break that
+14:06
+anyway so clearly this guy's a spammer
+14:09
+this guy's a spammer this guy's probably
+14:10
+a spammer for some reason his ratio is
+14:12
+at forty four we've this is actually the
+14:14
+guy shows you initially I think so
+14:17
+anyway probably we should lower it maybe
+14:18
+to 30% I mean if more than 30% of a user
+14:21
+submissions or spam maybe that's worth
+14:24
+pointing out I don't know I can't decide
+14:26
+on what a good number is but I feel like
+14:27
+definitely more than 50% they're a piece
+14:30
+of junk so so once we've identified
+14:33
+who's a piece of junk what we want to do
+14:36
+is then iterate over that and then post
+14:39
+of it because now we know it is true the
+14:41
+junk so every time we make a post at
+14:44
+least on a brand new account we have
+14:46
+like a timer it's like a 10 minute or 8
+14:48
+minutes or something like that so every
+14:50
+time we make a post we also want to
+14:51
+sleep so we're gonna import time here
+14:54
+and then I'm gonna scroll on down and
+14:56
+now what we want to do is basically just
+15:00
+iterate over the whatever we have now in
+15:05
+spam content so I'm just going to come
+15:07
+down here and I'm gonna paste this in
+15:09
+I'm gonna scroll out and make sure we
+15:11
+did that right let me confirm that real
+15:14
+quick
+15:15
+yeah so once we get to this point let me
+15:18
+pull this back down zoom in we're gonna
+15:20
+start iterating over the spam content so
+15:22
+we're gonna identify the ID the user the
+15:25
+submission itself when was that
+15:27
+submission created if that was less than
+15:29
+a day ago that's just 60 times 60 times
+15:31
+24 if that was less than a day ago then
+15:34
+the
+15:34
+full link would be to reddit.com slash
+15:36
+submission I just want to save this for
+15:38
+myself at least initially when I was
+15:40
+writing this I just I really wanted to
+15:42
+make sure I wasn't accusing someone spam
+15:43
+that wasn't spamming so I've been I'm
+15:46
+gonna save all the links basically then
+15:49
+this is our message we're just be Boop
+15:50
+we're a bot we're identifying this idiot
+15:53
+they're a spammer get rid of them that
+15:55
+kind of stuff
+15:56
+and then we're just using string
+15:58
+formatting passing it on in there and
+15:59
+letting them know
+16:00
+so once we've we've got that message
+16:03
+what we're gonna go ahead and do is
+16:04
+first we're gonna check the post of URLs
+16:06
+text this is just a quick file that
+16:09
+we're just gonna check and see if we've
+16:12
+already posted to that file if we have
+16:16
+then we're gonna skip it but if we
+16:19
+haven't so if that links not already in
+16:21
+the already posted what we're gonna want
+16:23
+to do is let's print out the message
+16:25
+let's go ahead and make a reply to that
+16:27
+reddit post then we're going to print
+16:29
+out that we've posted to and whatever
+16:31
+the link is and then we're going to
+16:33
+write that link to the post of URLs text
+16:36
+file and then we're gonna sleep for 12
+16:37
+minutes and then we're gonna break
+16:40
+because we don't want to necessarily
+16:41
+iterate through through everything we'd
+16:45
+rather like start clean and go with the
+16:47
+newest submissions again so we'll break
+16:49
+there other than that that's basically
+16:52
+it so we could we can run this now I'm
+16:56
+not sure if we'll actually find spam
+16:58
+this time around but let's just see
+17:00
+because I've been running this so I'm
+17:03
+not really sure that we'll find any spam
+17:05
+but we'll see what we get and if we
+17:09
+don't see we return to 404 for some
+17:11
+username I don't know who it was but
+17:14
+anyway if we don't post what I can do is
+17:17
+we can at least we can well we can go
+17:19
+back further in history when we search
+17:22
+for posters and then we can also go back
+17:25
+further in history into the actual
+17:27
+spammers like right now we say we're not
+17:29
+we're not gonna post on anything older
+17:31
+than a day we we could at least when I
+17:34
+was writing this I didn't see any point
+17:35
+to doing that especially if this is
+17:37
+running live there's no reason to go
+17:39
+back super 4 historically to do this but
+17:43
+yeah it doesn't look like we're gonna
+17:45
+find anything on this one
+17:47
+but what I'll do I guess what I could do
+17:49
+I'll pull this one over at least so at
+17:52
+least here we figure it out this one was
+17:55
+for online courses we found them we put
+17:58
+it just says we've posted and then we're
+18:00
+gonna sleep for 12 minutes if we do
+18:02
+happen to find somebody what I'll do
+18:04
+real quick just to see if we can get
+18:07
+somebody else let me say I don't know 50
+18:12
+and then at the point where we wait area
+18:16
+here so let's just say I don't know 10
+18:20
+let's try to rerun that and we'll see if
+18:23
+we find anything I'm not really sure if
+18:25
+we will but we'll try
+18:37
+we fred anyway while we're waiting on
+18:42
+that I'll just draw your attention one
+18:44
+more time - this is on github if you
+18:48
+want to make any contributions or
+18:49
+support it or whatever feel free to take
+18:52
+part other than that the codes also on
+18:56
+Python programming at net running
+18:57
+through it kind of like I did here so if
+18:59
+you missed anything or whatever you can
+19:02
+go over there
+19:02
+yeah well get all these users we're fine
+19:05
+probably shouldn't set that limit to 50
+19:08
+probably should've just done the
+19:09
+historical - like 10 days or whatever
+19:12
+this is taken forever okay so we found
+19:15
+somebody so again it was online courses
+19:18
+and it's on udemy freebies which is like
+19:22
+just a total spam subreddit but let's go
+19:25
+ahead and check them out anyway so we'll
+19:26
+just pay copy over here we'll head to
+19:29
+that and here we are so there it is so
+19:36
+in action running and just in general
+19:40
+being slightly annoying so far it looks
+19:43
+like people have been relatively
+19:47
+appreciative of of our BOTS but we'll
+19:50
+see I wasn't really sure what people
+19:51
+would think of it especially because
+19:53
+like I said it like on on udemy freebies
+19:56
+I'm pretty sure that's all for spam and
+19:58
+I'm not sure like if people actually
+20:00
+like that subreddit and find it useful
+20:03
+because they get cheap courses I'm not
+20:05
+really sure anyways that's it for now if
+20:09
+you guys have questions comments
+20:10
+concerns whatever feel free to even
+20:12
+below otherwise I'll see you in another
+20:14
+video
